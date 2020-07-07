@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>penndoublecount</title>
+    <link href ="{% static '/css/main.css' %}" rel ="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body style='background-color:lightgray;'>
+    <br>
+    <div class = "container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-body h-100" id ="profile-wrapper">
+                    <img id = "profile-pic" src = "{% static 'images/penn.jpg' %}">
+                    <br>
+                    <h4>Penn Double Count</h4>
+                    <br>
+                    <p>for SAS and SEAS <br>dual degree students <br> <br> made by <b>Bruce Lee</b> <br>VIPER Class of 2024<br><br>feedback here <br><b>ig:</b> real.brucelee</p>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card card-body h-100" id ="body-form">
+                    <br>
+                    <h4>What does this Program do?</h4>
+                    <hr>
+                    This simple program is designed for Penn dual degree students in SAS and SEAS. It automatically returns the "double counting" major requirements between the two majors that you are pursuing. Save some time :)
+
+                    <br>
+                    <br>
+
+                    Inside, all the program doing is just returning the duplicate items in two major requirement lists that you choose. The lists were self-created by web-scraping SAS and SEAS websites. Wharton and Nursing school pages seem to have different formattings. They seem to have umm... very school-specific major requirements so I didn't extract their data. 
+                    
+                    <br>
+                    <br>
+
+                    Next time, I'll try to make something useful to Wharton and Nursing students too.
+                    
+                    <hr>
+                    <br>
+                    1. Choose your degrees in the box below
+                    <br>
+                    <br>
+                    2. Wait for the results
+                    <br>
+                    <br>
+                    3. BAMM! 
+                    <br>
+                    <a href="http://shitelonsays.com/">ShitElonSays</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div id=form-form class="card card-body">
+                    <p>
+                        <form method="get">
+                            <br>
+                            <center>SAS degrees show first, then SEAS degrees</center>
+                            <br>
+                            <center>choose degree A (SAS or SEAS) -> {{form.degree1}}</center>
+                            <br>
+                            <center>choose degree B (SAS or SEAS) -> {{form.degree2}}</center>
+                            <br>
+                            <center><input type = "submit" value = "Submit"></center>
+                        </form>
+                    </p>
+                </div>
+            </div>
+        
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body h-100">
+                    <p>
+                        <span class="program">
+                            <h5>required courses for <b>{{major}}</b></h5>
+                            <hr>
+                            {{program}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="program2">
+                            <hr>
+                            <h5>required courses for <b>{{major2}}</b></h5>
+                            <hr>
+                            {{program2}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="double-count">
+                            <hr>
+                            <h5>double counting courses for <b>{{major}} & {{major2}}</b></h5>
+                            <hr>
+                            {{double_count}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        
+        </div>
+        <br>
+    </div>
+</body>
+</html>
