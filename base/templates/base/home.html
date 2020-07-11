@@ -1,0 +1,256 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>penndoublecount</title>
+    <link href ="{% static '/css/main.css' %}" rel ="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function()
+    {
+        $('.checkvalue').click(function()
+        {
+            var txt =""
+            $('.checkvalue:checked').each(function()
+            {
+                txt+=$(this).val()+",";
+            })
+                txt=txt.substring(0,txt.length-1);
+                $("#txtdisplay").val(txt);
+        });
+    });
+</script>
+</head>
+<body style='background-color:lightgray;'>
+    <br>
+    <div class = "container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-body h-100" id ="profile-wrapper">
+                    <img id = "profile-pic" src = "{% static 'images/penn.jpg' %}">
+                    <br>
+                    <h4>Penn Double Count</h4>
+                    <br>
+                    <p>for SAS and SEAS <br> single/dual degree students<br> <br>made by <b>Bruce Lee</b> <br>VIPER Class of 2024<br><br>feedback here <br><b>ig:</b> real.brucelee</p>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card card-body h-100" id ="body-form">
+                    <p>
+                        <p style="text-align:left;">Note: You're seeing the latest version of PennDoubleCount. v.1.2</p>
+                        
+                        
+                        <br>
+                        <h4>What does this Program do?</h4>
+                        <hr>
+                        PennDoubleCount helps Penn undergraduates identify all sorts of "double counting" major requirements. 
+                        <br>
+                        <br>
+                        You can use this program to <b>1. see all the double counting major requirements (for dual degree students)</b> <b>2. check AP credit that applies to you (for single/dual degree students) </b><b>3. do both.</b>
+                        
+
+                        <br>
+                        
+                        The requirement lists were self-created by web-scraping SAS and SEAS websites. Wharton and Nursing school pages seem to have different formattings. They seem to have very school-specific major requirements so I didn't extract their data for now.
+                        
+                        <br>
+                        <br>
+
+                        I'll gradually improve PennDoubleCount so that it can be useful to Wharton and Nursing students too.
+                        
+                        <hr>
+                        <h5>- How to Use -</h5>
+                        <br>
+                        1. Choose your degree(s) in the box below (choose "none" for degree B if you're a single degree student)
+                        <br>
+                        <br>
+                        2. Choose your AP Score(s) in the box below (leave blank if you don't have one)
+                        
+                        <br>
+                        <br>
+                        3. Check your major requirements for graduation and the calculation below
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <center>
+                    <div id=form-form class="card card-body">
+                        <p>
+                            <form method="get">
+                                {% csrf_token %}
+                                <br>
+                                <b>SAS degrees show first, then SEAS degrees</b>
+                                <br>
+                                <br>
+                                choose degree A (SAS or SEAS) -> {{form.degree1}}
+                                <br>
+                                <br>
+                                choose degree B (SAS or SEAS) -> {{form.degree2}}
+                                <br>
+                                <br>
+                                <br>
+                                <hr>
+                                <b>AP Credit Counter</b>
+                                <br>
+                                <br>
+                                *AP Art History - waive either ARTH101 or ARTH102 - choose one
+                                <br>
+                                *AP Statistics - waive either STAT101 or STAT111 - choose one
+                                <br>
+                                <br>
+                                
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Select Your AP(s)
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        
+                                        <input type="checkbox" value='*Art History - 5 waive ARTH101' class="checkvalue">*Art History - 5 waive ARTH101<br/>
+                                        <input type="checkbox" value='*Art History - 5 waive ARTH102'class="checkvalue">*Art History - 5 waive ARTH102<br/>
+                                        <input type="checkbox" value='Chemistry - 5'class="checkvalue">Chemistry - 5 (for SEAS only)<br/>
+                                        <input type="checkbox" value='Computer Science A - 5'class="checkvalue">Computer Science A - 5<br/>
+                                        <input type="checkbox" value='Computer Science AB - 5'class="checkvalue">Computer Science AB - 5<br/>
+                                        <input type="checkbox" value='Computer Science AB - 4'class="checkvalue">Computer Science AB - 4<br/>
+                                        <input type="checkbox" value='Economics Micro - 5'class="checkvalue">Economics Micro - 5<br/>
+                                        <input type="checkbox" value='Economics Macro - 5'class="checkvalue">Economics Macro - 5<br/>
+                                        <input type="checkbox" value='French Language - 5'class="checkvalue">French Language - 5<br/>
+                                        <input type="checkbox" value='French Literature - 5'class="checkvalue">French Literature - 5<br/>
+                                        <input type="checkbox" value='German Language - 5'class="checkvalue">German Language - 5<br/>
+                                        <input type="checkbox" value='Italian Language and Culture - 5'class="checkvalue">Italian Language and Culture - 5<br/>
+                                        <input type="checkbox" value='Latin - 5'class="checkvalue">Latin - 5<br/>
+                                        <input type="checkbox" value='Latin - Literature - 5'class="checkvalue">Latin - Literature - 5<br/>
+                                        <input type="checkbox" value='Latin - Vergil - 5'class="checkvalue">Latin - Vergil - 5<br/>
+                                        <input type="checkbox" value='Mathematics BC - 5'class="checkvalue">Mathematics BC - 5<br/>
+                                        <input type="checkbox" value='Physics-B - 5'class="checkvalue">Physics-B - 5<br/>
+                                        <input type="checkbox" value='Physics 1 - 5'class="checkvalue">Physics 1 - 5<br/>
+                                        <input type="checkbox" value='Physics 2 - 5'class="checkvalue">Physics 2 - 5<br/>
+                                        <input type="checkbox" value='Physics-C Mechanics - 5'class="checkvalue">Physics-C Mechanics - 5<br/>
+                                        <input type="checkbox" value='Physics-C Electricity and Magnetism - 5'class="checkvalue">Physics-C Electricity and Magnetism - 5<br/>
+                                        <input type="checkbox" value='Psychology - 5'class="checkvalue">Psychology - 5<br/>
+                                        <input type="checkbox" value='Spanish Language - 5'class="checkvalue">Spanish Language - 5<br/>
+                                        <input type="checkbox" value='Spanish Literature - 5'class="checkvalue">Spanish Literature - 5<br/>
+                                        <input type="checkbox" value='*Statistics - 5 waive STAT101'class="checkvalue">*Statistics - 5 waive STAT101<br/>
+                                        <input type="checkbox" value='*Statistics - 5 waive STAT111'class="checkvalue">*Statistics - 5 waive STAT111<br/>
+            
+                                    </div>
+                                    <input type = "text" id="txtdisplay" readonly name = "coursenames"/>
+                                </div>
+                                <br>
+                                <br>
+                                <hr>
+                                
+                                
+                                <b>See Results</b>
+                                <br>
+                                <br>
+                                
+                                <input type = "submit" value = "Submit">
+                                
+                                
+                            </form>
+                        </p>
+                    </div>
+                
+                </center>
+            </div>
+        
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body h-100">
+                    <p>
+                        <span class="final">
+                            
+                            <h5>courses to take for degree(s) in <b>{{major}} & {{major2}}</b></h5>
+                            <hr>
+                            - double counting courses are marked with ** 
+                            <br>
+                            - your AP credit is taken into account
+                            <br><br>
+                            {{final}}
+                            
+                            <br>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body h-100">
+                    <p>
+                        <span class="final">
+                            <br>
+                            <center><h5>check calculation below</h5></center>
+                            
+                            
+                            <br>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body h-100">
+                    <p>
+                        <span class="program">
+                            <h5>required courses for <b>{{major}}</b></h5>
+                            <hr>
+                            {{program}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="program2">
+                            <hr>
+                            <h5>required courses for <b>{{major2}}</b></h5>
+                            <hr>
+                            {{program2}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="total">
+                            <hr>
+                            <h5>required courses for <b>{{major}} & {{major2}}</b></h5>
+                            <hr>
+                            {{total}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="double-count">
+                            <hr>
+                            <h5>double counting courses for <b>{{major}} & {{major2}}</b></h5>
+                            <hr>
+                            {{double_count}}
+                            <br>
+                            <br>
+                        </span>
+                        <span class="AP">
+                            <hr>
+                            <h5><b>AP credit</b> that applies to you</h5>
+                            <hr>
+                            {{ap_send_final}}
+                            <br>
+                            <br>
+                        </span>
+                        
+                    </p>
+                </div>
+            </div>
+        
+        </div>
+        <br>
+    </div>
+</body>
+</html>
